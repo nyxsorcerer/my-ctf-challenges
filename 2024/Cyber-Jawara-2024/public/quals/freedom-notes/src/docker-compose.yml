@@ -1,0 +1,24 @@
+services:
+  webapp:
+    image: web-freedom-notes-webapp:latest
+    container_name: web-freedom-notes-webapp
+    restart: always
+    build:
+      context: ./webapp/
+    ports:
+      - 8001:8001
+  
+  bot-fn:
+    image: web-freedom-notes-bot:latest
+    container_name: web-freedom-notes-bot
+    restart: always
+    environment:
+      - FLAG=CJ{how_does_it_feel_to_become_free}
+      - APP_URL=http://webapp:8001/
+      - PORT=7999
+    depends_on:
+      - webapp
+    build:
+      context: ./bot/
+    ports:
+      - 7999:7999

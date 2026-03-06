@@ -1,0 +1,16 @@
+services:
+  js-runner:
+    restart: always
+    image: js-runner:latest
+    container_name: js-runner
+    build: .
+    ports:
+      - "4932:4932"
+    environment:
+      - NODE_ENV=production
+      - PORT=4932
+    volumes:
+      - ./flag.txt:/flag.txt:ro
+    mem_limit: 1g
+    cpu_quota: 50000
+    cpu_period: 100000

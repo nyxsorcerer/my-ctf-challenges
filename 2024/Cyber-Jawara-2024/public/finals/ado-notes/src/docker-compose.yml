@@ -1,0 +1,30 @@
+services:
+    ado-notes-waf:
+        image: ado-notes-waf:latest
+        container_name: ado-notes-waf
+        build: ./waf
+        restart: always
+        depends_on:
+            - ado-notes-web
+        ports:
+            - "4142:4142"
+        env_file:
+            - ./.env
+        networks:
+            - ado_notes
+    ado-notes-web:
+        image: ado-notes-web:latest
+        container_name: ado-notes-web
+        build: ./web
+        restart: always
+        ports:
+            - "127.0.0.1:4141:4141"
+        env_file:
+            - ./.env
+        volumes:
+            - ./flag.txt:/flag.txt:ro
+        networks:
+            - ado_notes
+
+networks:
+    ado_notes:

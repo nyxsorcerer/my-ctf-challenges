@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="Content-Security-Policy" content="script-src 'nonce-{{nonce}}'" />
+        <title>Freedom Notes</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="main.css" />
+        <style></style>
+    </head>
+
+<body class="text-center">
+    <link href="https://fonts.googleapis.com/css?family=Noticia+Text:400,400italic | Permanent+Marker" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet" type="text/css" />
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <h1 class="col-xs-12 text-center">Freedom Notes</h1>
+            </div>
+            <div class="row">
+                <div class="center-block" id="displayBox">
+                    <div class="col-xs-12" id="topNote"></div>
+                    <div class="col-xs-12" id="noteBox">
+                        <i class="fa fa-note-left fa-2x"></i>
+                        <p id="note">Notes</p>
+                    </div>
+                    <div class="text-right" id="personBox">
+                        <p id="person">Freedom-chan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script nonce="{{nonce}}">
+        function sanitize(html) {
+
+            var allowedElements = {
+                allowedTags: {
+                    '#text': true,
+                    BODY: true,
+                    FORM: true,
+                    A: true,
+                    B: true,
+                    IMG: true,
+                },
+                allowedAttributes: {
+                    src: true,
+                    style: true,
+                },
+            };
+
+            function removeNodeFromParent(targetNode) {
+                if (targetNode && targetNode.parentNode) {
+                    targetNode.parentNode.removeChild(targetNode);
+                }
+            }
+
+            function purifyNode(currentNode) {
+                if (!allowedElements.allowedTags[currentNode.nodeName]) {
+                    removeNodeFromParent(currentNode);
+                    return;
+                }
+
+                if(currentNode.nodeName === '#text'){
+                    return;
+                }
+
+                var nodeAttributes = currentNode.attributes;
+                var childNodesList = currentNode.childNodes;
+                var attrCount = currentNode.attributes.length;
+                var idx;
+
+                idx = attrCount;
+                while (idx--) {
+                    var attrName = nodeAttributes[idx].name;
+                    if (!allowedElements.allowedAttributes[attrName]) {
+                        currentNode.removeAttribute(attrName);
+                    }
+                }
+
+                var childCount = childNodesList.length;
+                var childIndex = 0;
+                var nodesToCheck = [];
+
+                for (childIndex = 0; childIndex < childCount; childIndex++) {
+                    nodesToCheck.push(childNodesList[childIndex]);
+                }
+
+                for (childIndex = 0; childIndex < nodesToCheck.length; childIndex++) {
+                    purifyNode(nodesToCheck[childIndex]);
+                }
+            }
+
+            function HTMLSanitizer(rawHTMLString) {
+                var parser = new DOMParser();
+                var parsedDoc = parser.parseFromString(rawHTMLString, "text/html");
+
+                purifyNode(parsedDoc.body);
+
+                return parsedDoc.body.innerHTML;
+            }
+
+            return HTMLSanitizer(html);
+        }
+        document.location.hash = "";
+        let note = document.getElementById('note')
+        
+        window.onhashchange = () => {
+            if (document.location.hash){
+                note.innerHTML = sanitize(decodeURIComponent(document.location.hash.slice(1)));
+            }
+            document.location.hash = "";
+        };
+    </script>
+</body>
+</html>

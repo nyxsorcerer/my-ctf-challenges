@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/dimasma0305/ctfify/refs/heads/master/function/template/templates/others/ctf-template/.gzctf/challenge.schema.yaml
+
+name: "unsafe-notes"
+author: "nyxmare"
+description: |
+  I think this notes platform lowkey unsafe
+  
+  - Bot will be at `/visit`
+  - Bot will be visit `http://localhost/`
+  - Please solve the challenge locally first
+
+  # Tools to use
+  - [Burp Suite](https://portswigger.net/burp) - Essential for interception and modifying web traffic.
+  - Your favorite browser
+
+type: "DynamicContainer"
+value: 1000
+
+provide: "./dist"
+ 
+container:
+  flagTemplate: "C2C{you_are_right_it_is_indeed_very_unsafe_[TEAM_HASH]}"
+  containerImage: "{{.slug}}:latest"
+  memoryLimit: 1024
+  cpuCount: 3
+  storageLimit: 512
+  containerExposePort: 80
+  enableTrafficCapture: false
+
+scripts:
+  start: cd src && docker build -t {{.slug}} .

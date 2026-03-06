@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phlib/xss-sanitizer": "^2.1",
+        "ext-sqlite3": "*"
+    }
+}

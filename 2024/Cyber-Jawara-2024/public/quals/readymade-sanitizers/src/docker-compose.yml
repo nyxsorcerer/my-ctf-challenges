@@ -1,0 +1,22 @@
+
+services:
+    php:
+        image: web-readymade-sanitizers-php:latest
+        container_name: web-readymade-sanitizers-php
+        build: ./
+        volumes:
+            - ./src:/app/
+        command: ["php", "-t", "/app", "-S", "0.0.0.0:1234"]
+        ports:
+            - 1230:1234
+    bot-rs:
+        image: web-readymade-sanitizers-bot:latest
+        container_name: web-readymade-sanitizers-bot
+        build: ./bot/
+        restart: always
+        env_file:
+            - .env
+        ports:
+            - 8182:8000
+        depends_on:
+            - php

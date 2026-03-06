@@ -1,0 +1,69 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "e273d60da8b746a5d6a397cdc60d7903",
+    "packages": [
+        {
+            "name": "phlib/xss-sanitizer",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phlib/xss-sanitizer.git",
+                "reference": "09f6ebff966f8318ea41015eb7f1dc786e7e2b7f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phlib/xss-sanitizer/zipball/09f6ebff966f8318ea41015eb7f1dc786e7e2b7f",
+                "reference": "09f6ebff966f8318ea41015eb7f1dc786e7e2b7f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9",
+                "symplify/easy-coding-standard": "^12"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phlib\\XssSanitizer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Price"
+                },
+                {
+                    "name": "Phlib Team & Contributors",
+                    "homepage": "https://github.com/phlib/xss-sanitizer/contributors"
+                }
+            ],
+            "description": "PHP XSS sanitizer tool for HTML",
+            "support": {
+                "issues": "https://github.com/phlib/xss-sanitizer/issues",
+                "source": "https://github.com/phlib/xss-sanitizer/tree/2.1.0"
+            },
+            "time": "2024-06-08T06:18:38+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "ext-sqlite3": "*"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}

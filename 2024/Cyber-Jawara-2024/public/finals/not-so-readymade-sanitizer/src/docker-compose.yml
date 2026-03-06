@@ -1,0 +1,23 @@
+services:
+    not-so-readymade-sanitizer-bot:
+        image: not-so-readymade-sanitizer-bot:latest
+        container_name: not-so-readymade-sanitizer-bot
+        build: ./bot
+        restart: always
+        depends_on:
+            - not-so-readymade-sanitizer-web
+        env_file:
+            - ./.env
+        ports:
+            - "4290:3000"
+    not-so-readymade-sanitizer-web:
+        image: not-so-readymade-sanitizer-web:latest
+        container_name: not-so-readymade-sanitizer-web
+        build: ./web
+        restart: always
+        ports:
+            - "4242:80"
+        env_file:
+            - ./.env
+        volumes:
+            - ./flag.txt:/flag.txt:ro
